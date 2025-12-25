@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: autoapp
+  
+  # Configuração do Banco de Dados (Bate com o docker-compose.yml)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/autoapp
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  # Configuração do JPA / Hibernate
+  jpa:
+    open-in-view: false # Boa prática: desliga para evitar queries lentas na view
+    show-sql: true # Mostra o SQL no console (útil em dev)
+    properties:
+      hibernate:
+        # IMPORTANTE: Dialeto que suporta PostGIS no Spring Boot 4 / Hibernate 7
+        dialect: org.hibernate.spatial.dialect.postgis.PostgisPG95Dialect
+        format_sql: true
+
+  # Configuração do Flyway (Migrations)
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    # O Flyway vai procurar scripts SQL em resources/db/migration
+
+  # Configuração de Upload (S3 - Magalu/AWS)
+  cloud:
+    aws:
+      s3:
+        bucket: nome-do-seu-bucket-dev # Vamos configurar isso depois
+      region:
+        static: us-east-1 # Ou a região da Magalu
+      credentials:
+        access-key: minio # Fake pra dev local
+        secret-key: minio123 # Fake pra dev local

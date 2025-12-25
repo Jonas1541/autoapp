@@ -1,0 +1,31 @@
+services:
+  # Banco de Dados PostgreSQL com extensão PostGIS pré-instalada
+  # Usamos a imagem postgis/postgis em vez de postgres puro
+  database:
+    image: postgis/postgis:16-3.4
+    container_name: autoapp-db
+    restart: always
+    environment:
+      POSTGRES_DB: autoapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Interface web para ver o banco (tipo um DBeaver mas no browser)
+  # Opcional, mas ajuda muito se não quiser abrir ferramenta pesada
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: autoapp-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:
