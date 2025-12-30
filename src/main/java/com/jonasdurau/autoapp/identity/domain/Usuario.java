@@ -1,11 +1,12 @@
-package com.jonasdurau.autoapp.shared.domain;
+package com.jonasdurau.autoapp.identity.domain;
 
+import com.jonasdurau.autoapp.shared.domain.Endereco;
 import com.jonasdurau.autoapp.shared.enums.PerfilAcesso;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -33,7 +34,7 @@ public abstract class Usuario {
 
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime dataCadastro;
+    private Instant dataCadastro;
 
     // Lista de Roles (Admin, Prestador, etc)
     // Cria uma tabela auxiliar tb_usuario_perfis
@@ -99,11 +100,11 @@ public abstract class Usuario {
         this.endereco = endereco;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public Instant getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
+    public void setDataCadastro(Instant dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
